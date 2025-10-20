@@ -12,14 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InventarioApp">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--Las Vistas que se veran despues del Inicio de Sesion correcto-->
+        <activity
+            android:name=".ui.usuarios.UsuariosActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>
