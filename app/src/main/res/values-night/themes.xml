@@ -2,6 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.InventarioApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:statusBarColor">@color/morado_suave</item>
+        <!-- Fondo global de la app -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- Iconos oscuros en la barra de estado -->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

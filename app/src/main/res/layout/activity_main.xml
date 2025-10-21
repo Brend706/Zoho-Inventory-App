@@ -1,32 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/container"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <!-- Contenedor para los Fragments -->
+    <!-- Barra superior-->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/morado_suave"
+        app:title=""
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <!-- Logo a la izquierda -->
+        <ImageView
+            android:id="@+id/logo_app"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/iconfox" />
+
+        <!-- Botón de notificaciones -->
+        <ImageButton
+            android:id="@+id/btn_notificaciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_notifications"
+            app:tint="@android:color/white"
+            android:contentDescription="Notificaciones" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- Contenedor de Fragments -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
+        app:navGraph="@navigation/mobile_navigation"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/mobile_navigation"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <!-- Bottom Navigation -->
+    <!-- Barra inferior-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/morado_suave"
+        app:itemTextColor="@color/black"
+        app:itemRippleColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
