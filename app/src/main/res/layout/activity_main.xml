@@ -26,7 +26,7 @@
             android:layout_height="40dp"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="8dp"
-            android:src="@drawable/iconfox" />
+            android:src="@drawable/iconfoxinversa" />
 
         <!-- Botón de notificaciones -->
         <ImageButton

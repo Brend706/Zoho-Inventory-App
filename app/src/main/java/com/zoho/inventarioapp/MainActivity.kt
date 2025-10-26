@@ -19,5 +19,13 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNav.setupWithNavController(navController)
 
+        // Revisar si MainActivity fue abierta desde AdminActivity
+        val vista = intent.getStringExtra("vista")
+        if (vista != null) {
+            when(vista) {
+                "usuarios" -> navController.navigate(R.id.navigation_usuarios)
+                "productos" -> navController.navigate(R.id.navigation_productos)
+            }
+        }
     }
 }

@@ -1,13 +1,14 @@
-package com.zoho.inventarioapp.ui.productos
+package com.zoho.inventarioapp.ui.usuarios
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.zoho.inventarioapp.R
 
-class ProductosFragment : Fragment() {
+class UsuariosFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

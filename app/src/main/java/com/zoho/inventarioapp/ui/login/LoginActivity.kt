@@ -12,7 +12,7 @@ import com.zoho.inventarioapp.R
 import kotlinx.coroutines.launch
 
 //Importamos las Vistas a las que redirige el login
-import com.zoho.inventarioapp.ui.usuarios.UsuariosActivity
+import com.zoho.inventarioapp.AdminActivity
 import com.zoho.inventarioapp.ui.productos.ProductosFragment
 
 class LoginActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                         1 -> {
                             Toast.makeText(this@LoginActivity, "Bienvenido Admin", Toast.LENGTH_SHORT).show()
                             // Redirigir al Dashboard
-                            val intent = Intent(this@LoginActivity, UsuariosActivity::class.java)
+                            val intent = Intent(this@LoginActivity, AdminActivity::class.java)
                             startActivity(intent)
                             finish()
                         }

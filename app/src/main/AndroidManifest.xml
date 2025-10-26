@@ -22,8 +22,12 @@
 
         <!--Las Vistas que se veran despues del Inicio de Sesion correcto-->
         <activity
-            android:name=".ui.usuarios.UsuariosActivity"
-            android:exported="true" />
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
 
     </application>
 

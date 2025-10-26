@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_dashboard">
+    app:startDestination="@id/navigation_usuarios">
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.zoho.inventarioapp.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_usuarios"
+        android:name="com.zoho.inventarioapp.ui.usuarios.UsuariosFragment"
         android:label="Dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_usuarios" />
 
     <fragment
         android:id="@+id/navigation_productos"

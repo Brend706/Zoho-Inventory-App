@@ -3,5 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="morado_suave">#846DB0</color>
-    <color name="ripple_morado">#33FFFFFF</color> <!-- más transparente -->
+    <color name="ripple_morado">#33FFFFFF</color>
+    <color name="morado_mas_suave">#A98FD9</color>
 </resources>
