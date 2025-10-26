@@ -38,5 +38,6 @@ class AdminActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("vista", vista)
         startActivity(intent)
+        finish()
     }
 }

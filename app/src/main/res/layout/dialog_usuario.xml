@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:textColorHint="@color/morado_mas_suave"
+            android:hint="Nombre de Usuario"
+            android:padding="12dp"/>
+
+        <EditText
+            android:id="@+id/etCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo de Usuario"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:textColorHint="@color/morado_mas_suave"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:textColorHint="@color/morado_mas_suave"
+            android:inputType="number"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/etRol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Rol"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:textColorHint="@color/morado_mas_suave"
+            android:inputType="number"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/etSucursal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Sucursal (opcional)"
+            android:fontFamily="sans-serif-medium"
+            android:textColorHint="@color/morado_mas_suave"
+            android:textColor="@color/black"
+            android:inputType="number"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

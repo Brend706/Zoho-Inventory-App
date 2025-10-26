@@ -12,19 +12,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //configuración de navegación
+        // Configuración de navegación
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
+
         val bottomNav = findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNav.setupWithNavController(navController)
 
         // Revisar si MainActivity fue abierta desde AdminActivity
         val vista = intent.getStringExtra("vista")
         if (vista != null) {
-            when(vista) {
-                "usuarios" -> navController.navigate(R.id.navigation_usuarios)
-                "productos" -> navController.navigate(R.id.navigation_productos)
+            when (vista) {
+                "usuarios" -> bottomNav.selectedItemId = R.id.navigation_usuarios
+                "productos" -> bottomNav.selectedItemId = R.id.navigation_productos
             }
         }
     }

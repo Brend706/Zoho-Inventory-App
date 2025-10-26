@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 <item
-    android:id="@+id/navigation_dashboard"
-    android:icon="@drawable/ic_dashboard"
-    android:title="Dashboard" />
+    android:id="@+id/navigation_usuarios"
+    android:icon="@drawable/ic_usuario"
+    android:title="Usuarios" />
 
 <item
     android:id="@+id/navigation_productos"
