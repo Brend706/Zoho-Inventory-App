@@ -71,7 +71,9 @@ class UsuariosFragment : Fragment() {
 
         // Listeners
         btnEditar.setOnClickListener { mostrarDialogoEditarUsuario(usuario) }
-        btnEliminar.setOnClickListener { viewModel.eliminarUsuario(usuario) }
+        btnEliminar.setOnClickListener {
+            eliminarUsuarioConConfirmacion(usuario)
+        }
 
         // Agregamos el CardView al contenedor
         contenedorUsuarios.addView(card)
@@ -143,4 +145,29 @@ class UsuariosFragment : Fragment() {
             setTextColor(resources.getColor(R.color.morado_suave))
         }
     }
+
+    private fun eliminarUsuarioConConfirmacion(usuario: Usuario) {
+        val dialog = AlertDialog.Builder(requireContext(), R.style.EstiloDialog)
+            .setTitle("Eliminar Usuario")
+            .setMessage("¿Estás seguro de que deseas eliminar a ${usuario.nombre}?")
+            .setPositiveButton("Sí") { _, _ ->
+                viewModel.eliminarUsuario(usuario)
+            }
+            .setNegativeButton("Cancelar", null)
+            .create()
+
+        dialog.show()
+
+        // Botones personalizados
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
+            setTextColor(resources.getColor(R.color.morado_mas_suave))
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+        }
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).apply {
+            setTextColor(resources.getColor(R.color.morado_mas_suave))
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+        }
+    }
+
 }
