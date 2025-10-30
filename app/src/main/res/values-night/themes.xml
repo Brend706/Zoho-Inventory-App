@@ -6,6 +6,6 @@
         <!-- Fondo global de la app -->
         <item name="android:windowBackground">@android:color/white</item>
         <!-- Iconos oscuros en la barra de estado -->
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

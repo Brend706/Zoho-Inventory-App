@@ -65,5 +65,19 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // ERROR DE LOGIN
+        lifecycleScope.launch {
+            viewModel.loginError.collect { errorMessage ->
+                if (errorMessage != null) {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        errorMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    txtPassword.text?.clear()
+                }
+            }
+        }
     }
 }

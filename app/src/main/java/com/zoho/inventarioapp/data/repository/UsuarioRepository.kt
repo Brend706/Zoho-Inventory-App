@@ -32,8 +32,8 @@ class UsuarioRepository(private val usuarioDao: UsuarioDao) {
         return usuarioDao.obtenerPorCodigo(codigo)
     }
 
-    suspend fun obtenerPorCorreo(email: String): Usuario? {
-        return usuarioDao.obtenerPorCorreo(email)
+    suspend fun obtenerPorCorreo(email: String): Boolean {
+        return usuarioDao.obtenerPorCorreo(email) != null
     }
 
     suspend fun login(email: String, password: String): Usuario? {

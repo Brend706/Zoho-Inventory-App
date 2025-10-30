@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Version: Indy -->
     <!-- Barra superior-->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
@@ -15,6 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@color/morado_suave"
         app:title=""
+        android:fitsSystemWindows="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -31,12 +33,13 @@
         <!-- Botón de notificaciones -->
         <ImageButton
             android:id="@+id/btn_notificaciones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_notifications"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_notificaciones_foreground"
             app:tint="@android:color/white"
             android:contentDescription="Notificaciones" />
 
