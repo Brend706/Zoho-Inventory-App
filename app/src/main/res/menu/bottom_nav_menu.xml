@@ -12,14 +12,13 @@
     android:title="Productos" />
 
 <item
-    android:id="@+id/navigation_notifications"
-    android:icon="@drawable/ic_notifications"
-    android:title="Sucursales" />
+    android:id="@+id/navigation_inventario"
+    android:icon="@drawable/ic_inventario"
+    android:title="Inventario" />
 
 <item
-
-    android:id="@+id/navigation_perfil"
-    android:icon="@drawable/ic_perfil"
-    android:title="Perfil" />
+    android:id="@+id/navigation_sucursales"
+    android:icon="@drawable/ic_sucursales"
+    android:title="Sucursales" />
 
 </menu>

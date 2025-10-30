@@ -18,16 +18,15 @@
         tools:layout="@layout/fragment_productos" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications"
-        android:name="com.zoho.inventarioapp.ui.notifications.NotificationsFragment"
-        android:label="Notificaciones"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_inventario"
+        android:name="com.zoho.inventarioapp.ui.inventario.InventarioFragment"
+        android:label="Inventario"
+        tools:layout="@layout/fragment_inventario" />
 
     <fragment
-        android:id="@+id/navigation_perfil"
-        android:name="com.zoho.inventarioapp.ui.perfil.PerfilFragment"
-        android:label="Perfil"
+        android:id="@+id/navigation_sucursales"
+        android:name="com.zoho.inventarioapp.ui.sucursales.SucursalesFragment"
+        android:label="Sucursales"
         tools:layout="@layout/fragment_perfil" />
 
 </navigation>

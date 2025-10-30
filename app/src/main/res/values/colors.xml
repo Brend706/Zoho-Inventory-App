@@ -5,4 +5,7 @@
     <color name="morado_suave">#846DB0</color>
     <color name="ripple_morado">#33FFFFFF</color>
     <color name="morado_mas_suave">#A98FD9</color>
+    <color name="morado_claro">#f4effa</color>
+    <color name="morado_oscuro">#2f184b</color>
+    <color name="morado_oscuro2">#5c0099</color>
 </resources>
