@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.zoho.inventarioapp.ui.categorias.CategoriasActivity
+
 
 class AdminActivity : AppCompatActivity() {
 
@@ -25,6 +27,7 @@ class AdminActivity : AppCompatActivity() {
         val cardProductos = findViewById<CardView>(R.id.cardProductos)
         val cardInventario = findViewById<CardView>(R.id.cardInventario)
         val cardMovimientos = findViewById<CardView>(R.id.cardMovimientoInventario)
+        val cardCategoria = findViewById<CardView>(R.id.cardCategoria)
 
         // Abrir las vistas usando Intents a MainActivity
         cardUsuarios.setOnClickListener {
@@ -42,6 +45,11 @@ class AdminActivity : AppCompatActivity() {
         cardMovimientos.setOnClickListener {
             abrirEnMainActivity("movimientos")
         }
+
+        cardCategoria.setOnClickListener {
+            val intent = Intent(this, CategoriasActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun abrirEnMainActivity(vista: String) {
@@ -51,11 +59,11 @@ class AdminActivity : AppCompatActivity() {
         finish()
     }
 
+    // menu emergente (el icono de 3 puntos)
     override fun onCreateOptionsMenu(menu: android.view.Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_top_bar, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_editperfil -> {

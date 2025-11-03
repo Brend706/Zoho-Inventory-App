@@ -22,7 +22,6 @@ class SucursalesFragment : Fragment() {
 
     private val viewModel: SucursalesViewModel by viewModels()
     private lateinit var adapter: SucursalAdapter
-
     private lateinit var rvSucursales: RecyclerView
     private lateinit var tvEmpty: TextView
     private lateinit var progressBar: ProgressBar
@@ -109,7 +108,7 @@ class SucursalesFragment : Fragment() {
         val etDireccion = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etDireccion)
         val etTelefono = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etTelefono)
 
-        AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext(), R.style.EstiloDialog)
             .setTitle("Agregar Sucursal")
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
@@ -139,7 +138,7 @@ class SucursalesFragment : Fragment() {
         etDireccion.setText(sucursal.direccion)
         etTelefono.setText(sucursal.telefono)
 
-        AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext(), R.style.EstiloDialog)
             .setTitle("Editar Sucursal")
             .setView(dialogView)
             .setPositiveButton("Actualizar") { _, _ ->
@@ -158,7 +157,7 @@ class SucursalesFragment : Fragment() {
     }
 
     private fun confirmarEliminar(sucursal: Sucursal) {
-        AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext(), R.style.EstiloDialog)
             .setTitle("Eliminar Sucursal")
             .setMessage("¿Estás seguro de eliminar '${sucursal.nombre}'?")
             .setPositiveButton("Eliminar") { _, _ ->

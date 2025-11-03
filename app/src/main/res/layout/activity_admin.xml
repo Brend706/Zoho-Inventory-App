@@ -6,9 +6,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".AdminActivity">
 
-    <!-- Version: Indy -->
     <!-- Barra superior-->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
@@ -33,15 +32,15 @@
         <!-- Botón de notificaciones -->
         <ImageButton
             android:id="@+id/btn_notificaciones"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_notificaciones_foreground"
+            android:src="@drawable/ic_notificaciones"
             app:tint="@android:color/white"
-            android:contentDescription="Notificaciones" />
+            android:contentDescription="Notificaciones"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -223,6 +222,45 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Movimiento Inventario"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Tarjeta de Categorias -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCategoria"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/morado_mas_suave"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:tint="@android:color/white"
+                    android:contentDescription="Categorias"
+                    android:src="@drawable/ic_category" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Categorias"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
