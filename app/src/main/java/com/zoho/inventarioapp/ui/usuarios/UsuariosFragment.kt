@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -56,7 +55,6 @@ class UsuariosFragment : Fragment() {
     //dialog_usuario es como los modals de mvc, es lo que vemos cuando le damos a crear o editar, y
     //ahi esta el diseño de esa parte
     private fun crearCardUsuario(usuario: Usuario) {
-        // Inflamos un CardView a partir de un layout de ejemplo que solo tenga la estructura
         val card = layoutInflater.inflate(R.layout.item_usuario, contenedorUsuarios, false)
 
         // Referencias a los elementos del CardView
@@ -91,13 +89,29 @@ class UsuariosFragment : Fragment() {
             .setTitle("Crear Usuario")
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
+                val nombre = etNombre.text.toString().trim()
+                val correo = etCorreo.text.toString().trim()
+                val rolText = etRol.text.toString().trim()
+                val password = etPassword.text.toString().trim()
+                val sucursalText = etSucursal.text.toString().trim()
+
+                // Validaciónes
+                if (nombre.isEmpty() || correo.isEmpty() || rolText.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Todos los campos son obligatorios.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setPositiveButton
+                }
+
                 val nuevoUsuario = Usuario(
                     codUsuario = UUID.randomUUID().toString(),
-                    nombre = etNombre.text.toString(),
-                    correo = etCorreo.text.toString(),
-                    password = etPassword.text.toString(),
-                    idRol = etRol.text.toString().toIntOrNull() ?: 1,
-                    idSucursal = etSucursal.text.toString().toIntOrNull()
+                    nombre = nombre,
+                    correo = correo,
+                    password = password,
+                    idRol = rolText.toIntOrNull() ?: 1,
+                    idSucursal = sucursalText.toIntOrNull()
                 )
                 viewModel.agregarUsuario(nuevoUsuario)
             }
@@ -121,20 +135,34 @@ class UsuariosFragment : Fragment() {
         builder.setTitle("Editar Usuario")
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
+                val nombre = etNombre.text.toString().trim()
+                val correo = etCorreo.text.toString().trim()
+                val rolText = etRol.text.toString().trim()
+                val sucursalText = etSucursal.text.toString().trim()
+
+                // Validaciónes
+                if (nombre.isEmpty() || correo.isEmpty() || rolText.isEmpty()) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Todos los campos obligatorios.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setPositiveButton
+                }
+
                 val actualizado = usuario.copy(
-                    nombre = etNombre.text.toString(),
-                    correo = etCorreo.text.toString(),
-                    idRol = etRol.text.toString().toIntOrNull() ?: usuario.idRol,
-                    idSucursal = etSucursal.text.toString().toIntOrNull()
+                    nombre = nombre,
+                    correo = correo,
+                    idRol = rolText.toIntOrNull() ?: usuario.idRol,
+                    idSucursal = sucursalText.toIntOrNull()
                 )
                 viewModel.editarUsuario(actualizado)
             }
             .setNegativeButton("Cancelar", null)
-            // Creamos una variables para modificar los botones
-            val dialog = builder.create()
-            dialog.show()
 
-        // Botones personalizados
+        val dialog = builder.create()
+        dialog.show()
+
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
             setBackgroundColor(android.graphics.Color.TRANSPARENT)
             setTextColor(resources.getColor(R.color.morado_suave))
@@ -155,7 +183,7 @@ class UsuariosFragment : Fragment() {
             }
             .setNegativeButton("Cancelar", null)
             .create()
-
+ 
         dialog.show()
 
         // Botones personalizados

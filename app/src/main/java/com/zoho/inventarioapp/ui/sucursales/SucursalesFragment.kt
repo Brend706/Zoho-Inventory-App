@@ -1,6 +1,7 @@
 package com.zoho.inventarioapp.ui.sucursales
 
 import android.os.Bundle
+import android.text.method.DigitsKeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.zoho.inventarioapp.R
@@ -108,6 +108,9 @@ class SucursalesFragment : Fragment() {
         val etDireccion = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etDireccion)
         val etTelefono = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etTelefono)
 
+        // Solo permitir números y guion
+        etTelefono.keyListener = DigitsKeyListener.getInstance("0123456789-")
+
         AlertDialog.Builder(requireContext(), R.style.EstiloDialog)
             .setTitle("Agregar Sucursal")
             .setView(dialogView)
@@ -116,8 +119,10 @@ class SucursalesFragment : Fragment() {
                 val direccion = etDireccion.text.toString()
                 val telefono = etTelefono.text.toString()
 
-                if (nombre.isNotEmpty() && direccion.isNotEmpty() && telefono.isNotEmpty()) {
+                if (nombre.isNotEmpty() && direccion.isNotEmpty() && telefono.isNotEmpty() && telefono.matches(Regex("\\d{4}-\\d{4}"))) {
                     viewModel.agregarSucursal(nombre, direccion, telefono)
+                }  else if(!telefono.matches(Regex("\\d{4}-\\d{4}"))){
+                    Toast.makeText(requireContext(), "Ingresa el Telefono con el formato 0000-0000", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 }
@@ -133,6 +138,9 @@ class SucursalesFragment : Fragment() {
         val etDireccion = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etDireccion)
         val etTelefono = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etTelefono)
 
+        // Solo permitir números y guion
+        etTelefono.keyListener = DigitsKeyListener.getInstance("0123456789-")
+
         // Pre-llenar con datos actuales
         etNombre.setText(sucursal.nombre)
         etDireccion.setText(sucursal.direccion)
@@ -146,8 +154,10 @@ class SucursalesFragment : Fragment() {
                 val direccion = etDireccion.text.toString()
                 val telefono = etTelefono.text.toString()
 
-                if (nombre.isNotEmpty() && direccion.isNotEmpty() && telefono.isNotEmpty()) {
-                    viewModel.actualizarSucursal(sucursal.idSucursal, nombre, direccion, telefono)
+                if (nombre.isNotEmpty() && direccion.isNotEmpty() && telefono.isNotEmpty() && telefono.matches(Regex("\\d{4}-\\d{4}"))) {
+                    viewModel.agregarSucursal(nombre, direccion, telefono)
+                }  else if(!telefono.matches(Regex("\\d{4}-\\d{4}"))){
+                    Toast.makeText(requireContext(), "Ingresa el Telefono con el formato 0000-0000", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 }

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 //Importamos las Vistas a las que redirige el login
 import com.zoho.inventarioapp.AdminActivity
-import com.zoho.inventarioapp.ui.productos.ProductosFragment
+import com.zoho.inventarioapp.EmpleadosActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                         2 -> {
                             Toast.makeText(this@LoginActivity, "Bienvenido Empleado", Toast.LENGTH_SHORT).show()
                             // Redirigir a la actividad de empleado
-                            val intent = Intent(this@LoginActivity, ProductosFragment::class.java)
+                            val intent = Intent(this@LoginActivity, EmpleadosActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
