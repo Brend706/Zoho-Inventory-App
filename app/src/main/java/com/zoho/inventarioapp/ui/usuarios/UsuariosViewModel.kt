@@ -23,6 +23,9 @@ class UsuariosViewModel(application: Application) : AndroidViewModel(application
 
     private val _sucursales = MutableStateFlow<List<Sucursal>>(emptyList())
     val sucursales: StateFlow<List<Sucursal>> = _sucursales
+
+    private val _mensaje = MutableStateFlow<String?>(null)
+    val mensaje: StateFlow<String?> = _mensaje
     fun obtenerRoles() = viewModelScope.launch {
         val rolDao = AppDatabase.getDatabase(getApplication()).rolDao()
         rolDao.obtenerTodos().collect { lista ->
@@ -48,10 +51,35 @@ class UsuariosViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun agregarUsuario(usuario: Usuario) = viewModelScope.launch { repository.insertar(usuario) }
+    fun agregarUsuario(usuario: Usuario) = viewModelScope.launch {
+        try {
+            repository.insertar(usuario)
+            _mensaje.value = "Usuario agregado correctamente"
+        } catch (e: Exception) {
+            _mensaje.value = "Error al agregar: ${e.message}"
+        }
+    }
 
-    fun editarUsuario(usuario: Usuario) = viewModelScope.launch { repository.actualizar(usuario) }
+    fun editarUsuario(usuario: Usuario) = viewModelScope.launch {
+        try {
+            repository.actualizar(usuario)
+            _mensaje.value = "Usuario actualizado correctamente"
+        } catch (e: Exception) {
+            _mensaje.value = "Error al actualizar: ${e.message}"
+        }
+    }
 
-    fun eliminarUsuario(usuario: Usuario) = viewModelScope.launch { repository.eliminar(usuario) }
+    fun eliminarUsuario(usuario: Usuario) = viewModelScope.launch {
+        try {
+            repository.eliminar(usuario)
+            _mensaje.value = "Usuario eliminado correctamente"
+        } catch (e: Exception) {
+            _mensaje.value = "Error al eliminar: ${e.message}"
+        }
+    }
+
+    // limpiar mensaje
+    fun limpiarMensaje() {
+        _mensaje.value = null
+    }
 }
-

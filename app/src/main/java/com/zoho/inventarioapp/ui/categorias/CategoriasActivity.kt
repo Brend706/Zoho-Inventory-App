@@ -168,14 +168,21 @@ class CategoriasActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_editperfil -> {
                 Toast.makeText(this, "Editar Perfil", Toast.LENGTH_SHORT).show()
                 true
             }
             R.id.action_cerrarsesion -> {
-                Toast.makeText(this, "Cerrar Sesión", Toast.LENGTH_SHORT).show()
+                val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
+                prefs.edit().clear().apply()
+
+                // Redirigir al LoginActivity
+                val intent = Intent(this, com.zoho.inventarioapp.ui.login.LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish() // cerrar MainActivity
                 true
             }
             else -> super.onOptionsItemSelected(item)

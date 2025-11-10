@@ -33,6 +33,7 @@ class UsuariosFragment : Fragment() {
         }
 
         observarUsuarios()
+        observarMensajes()
         return view
     }
 
@@ -42,6 +43,17 @@ class UsuariosFragment : Fragment() {
                 contenedorUsuarios.removeAllViews()
                 lista.forEach { usuario ->
                     crearCardUsuario(usuario)
+                }
+            }
+        }
+    }
+
+    private fun observarMensajes() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.mensaje.collect { mensaje ->
+                if (mensaje != null) {
+                    Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
+                    viewModel.limpiarMensaje()
                 }
             }
         }

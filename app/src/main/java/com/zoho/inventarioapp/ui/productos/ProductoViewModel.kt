@@ -22,6 +22,9 @@ class ProductosViewModel(application: Application) : AndroidViewModel(applicatio
     private val _categorias = MutableStateFlow<List<Categoria>>(emptyList())
     val categorias: StateFlow<List<Categoria>> = _categorias
 
+    private val _mensaje = MutableStateFlow<String?>(null)
+    val mensaje: StateFlow<String?> = _mensaje
+
     init {
         val productoDao = AppDatabase.getDatabase(application).productoDao()
         val categoriaDao = AppDatabase.getDatabase(application).categoriaDao()
@@ -47,11 +50,30 @@ class ProductosViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun editarProducto(producto: Producto) = viewModelScope.launch {
-        repository.actualizar(producto)
+        try {
+            repository.actualizar(producto)
+            _mensaje.value = "Producto actualizado correctamente"
+        } catch (e: Exception) {
+            _mensaje.value = "Error al actualizar producto: ${e.message}"
+        }
     }
 
     fun eliminarProducto(producto: Producto) = viewModelScope.launch {
-        repository.eliminar(producto)
+        try {
+            repository.eliminar(producto)
+            _mensaje.value = "Producto eliminado correctamente"
+        } catch (e: Exception) {
+            _mensaje.value = "Error al eliminar producto: ${e.message}"
+        }
     }
+
+    fun actualizarCategorias(nuevasCategorias: List<Categoria>) {
+        _categorias.value = nuevasCategorias
+    }
+
+    fun limpiarMensaje() {
+        _mensaje.value = null
+    }
+
 }
 

@@ -16,6 +16,8 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.*
 import com.zoho.inventarioapp.ui.categorias.CategoriasActivity
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.first
 
 class ProductosFragment : Fragment() {
 
@@ -53,6 +55,7 @@ class ProductosFragment : Fragment() {
         }
 
         observarProductos()
+        observarMensajes()
         return view
     }
 
@@ -62,6 +65,17 @@ class ProductosFragment : Fragment() {
                 contenedorProductos.removeAllViews()
                 lista.forEach { producto ->
                     crearCardProducto(producto)
+                }
+            }
+        }
+    }
+
+    private fun observarMensajes() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.mensaje.collect { mensaje ->
+                if (mensaje != null) {
+                    Toast.makeText(requireContext(), mensaje, Toast.LENGTH_SHORT).show()
+                    viewModel.limpiarMensaje()
                 }
             }
         }
@@ -245,5 +259,33 @@ class ProductosFragment : Fragment() {
             .setNegativeButton("Cancelar", null)
             .create()
         dialog.show()
+
+        // Botones personalizados
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
+            setTextColor(resources.getColor(R.color.morado_mas_suave))
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+        }
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).apply {
+            setTextColor(resources.getColor(R.color.morado_mas_suave))
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        // Recargar categorías desde la BD cuando el fragmento se muestra nuevamente
+        viewLifecycleOwner.lifecycleScope.launch {
+            val categoriaDao = com.zoho.inventarioapp.data.local.database.AppDatabase
+                .getDatabase(requireContext())
+                .categoriaDao()
+
+            val lista = categoriaDao.obtenerTodas().first()
+            viewModel.viewModelScope.launch {
+                viewModel.actualizarCategorias(lista)
+            }
+        }
     }
 }
