@@ -11,7 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.zoho.inventarioapp.R
 import kotlinx.coroutines.launch
 
-//Importamos las Vistas a las que redirige el login
+// Importamos las vistas a las que redirige el login
 import com.zoho.inventarioapp.AdminActivity
 import com.zoho.inventarioapp.EmpleadosActivity
 
@@ -43,17 +43,19 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.usuario.collect { user ->
                 if (user != null) {
+                    // Guardar rol en SharedPreferences
+                    val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
+                    prefs.edit().putBoolean("esAdmin", user.idRol == 1).apply()
+
                     when (user.idRol) {
-                        1 -> {
+                        1 -> { // Admin
                             Toast.makeText(this@LoginActivity, "Bienvenido Admin", Toast.LENGTH_SHORT).show()
-                            // Redirigir al Dashboard
                             val intent = Intent(this@LoginActivity, AdminActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
-                        2 -> {
+                        2 -> { // Empleado
                             Toast.makeText(this@LoginActivity, "Bienvenido Empleado", Toast.LENGTH_SHORT).show()
-                            // Redirigir a la actividad de empleado
                             val intent = Intent(this@LoginActivity, EmpleadosActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -66,15 +68,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // ERROR DE LOGIN
+        // Manejo de errores de login
         lifecycleScope.launch {
             viewModel.loginError.collect { errorMessage ->
                 if (errorMessage != null) {
-                    Toast.makeText(
-                        this@LoginActivity,
-                        errorMessage,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_LONG).show()
                     txtPassword.text?.clear()
                 }
             }

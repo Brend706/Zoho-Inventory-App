@@ -12,24 +12,37 @@ import androidx.drawerlayout.widget.DrawerLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.view.GravityCompat
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Configuración barra de estado
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = getColor(R.color.morado_suave)
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = false
         }
+
         setContentView(R.layout.activity_main)
 
-        //abrir menu admin desde el logo de la app
+        // Leer si el usuario es admin desde SharedPreferences
+        val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
+        val esAdmin = prefs.getBoolean("esAdmin", false)
+
+        // Abrir menú correspondiente desde el logo de la app
         val logoApp = findViewById<ImageView>(R.id.logo_app)
         logoApp.setOnClickListener {
-            val intent = Intent(this, AdminActivity::class.java)
+            val intent = if (esAdmin) {
+                Intent(this, AdminActivity::class.java)
+            } else {
+                Intent(this, EmpleadosActivity::class.java)
+            }
             startActivity(intent)
         }
+
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.topAppBar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -38,21 +51,26 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
         val bottomNav = findViewById<BottomNavigationView>(R.id.nav_view)
+
+        // Ocultar opción de Usuarios si no es admin
+        if (!esAdmin) {
+            bottomNav.menu.findItem(R.id.navigation_usuarios)?.isVisible = false
+        }
+
         bottomNav.setupWithNavController(navController)
 
-        // Revisar si MainActivity fue abierta desde AdminActivity
+        // Revisar si MainActivity fue abierta desde otra vista
         val vista = intent.getStringExtra("vista")
         if (vista != null) {
             when (vista) {
-                "usuarios" -> bottomNav.selectedItemId = R.id.navigation_usuarios
+                "usuarios" -> if (esAdmin) bottomNav.selectedItemId = R.id.navigation_usuarios
                 "productos" -> bottomNav.selectedItemId = R.id.navigation_productos
                 "sucursales" -> bottomNav.selectedItemId = R.id.navigation_sucursales
             }
         }
 
-        //panel de notificaciones
+        // Panel de notificaciones
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val btnNotificaciones = findViewById<ImageButton>(R.id.btn_notificaciones)
         btnNotificaciones.setOnClickListener {
@@ -64,20 +82,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // menu emergente (el icono de 3 puntos)
     override fun onCreateOptionsMenu(menu: android.view.Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_top_bar, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
-            //por el momento solo muestran un mensaje las opciones jajajjj
             R.id.action_editperfil -> {
-                android.widget.Toast.makeText(this, "Editar Perfil", android.widget.Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Editar Perfil", Toast.LENGTH_SHORT).show()
                 true
             }
             R.id.action_cerrarsesion -> {
-                android.widget.Toast.makeText(this, "Cerrar Sesion", android.widget.Toast.LENGTH_SHORT).show()
+                val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
+                prefs.edit().clear().apply()
+
+                // Redirigir al LoginActivity
+                val intent = Intent(this, com.zoho.inventarioapp.ui.login.LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish() // cerrar MainActivity
                 true
             }
             else -> super.onOptionsItemSelected(item)

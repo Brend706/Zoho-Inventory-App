@@ -5,8 +5,15 @@
         <!-- Atributos globales de la App-->
     </style>
 
-    <!-- Estilo para el dialog_usuario -->
+    <!-- Estilo para el dialogos -->
     <style name="EstiloDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorAccent">@color/morado_mas_suave</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
+
+    <!-- Estilo para las Opciones -->
+    <style name="Opciones" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="colorAccent">@color/morado_mas_suave</item>
         <item name="android:background">@color/white</item>
         <item name="android:textColorPrimary">@color/black</item>

@@ -2,11 +2,11 @@ package com.zoho.inventarioapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.zoho.inventarioapp.ui.categorias.CategoriasActivity
 
 class AdminActivity : AppCompatActivity() {
 
@@ -62,14 +62,22 @@ class AdminActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_top_bar, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_editperfil -> {
-                android.widget.Toast.makeText(this, "Editar Perfil", android.widget.Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Editar Perfil", Toast.LENGTH_SHORT).show()
                 true
             }
             R.id.action_cerrarsesion -> {
-                android.widget.Toast.makeText(this, "Cerrar Sesion", android.widget.Toast.LENGTH_SHORT).show()
+                val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
+                prefs.edit().clear().apply()
+
+                // Redirigir al LoginActivity
+                val intent = Intent(this, com.zoho.inventarioapp.ui.login.LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish() // cerrar MainActivity
                 true
             }
             else -> super.onOptionsItemSelected(item)
