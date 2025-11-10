@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,29 +15,28 @@
             android:id="@+id/etNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Nombre del producto"
             android:textColor="@color/black"
             android:fontFamily="sans-serif-medium"
             android:textColorHint="@color/morado_mas_suave"
-            android:hint="Nombre de Usuario"
             android:padding="12dp"/>
 
         <EditText
-            android:id="@+id/etCorreo"
+            android:id="@+id/etCodigo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo de Usuario"
+            android:hint="Código del producto"
             android:textColor="@color/black"
             android:fontFamily="sans-serif-medium"
             android:textColorHint="@color/morado_mas_suave"
-            android:inputType="textEmailAddress"
             android:padding="12dp"
             android:layout_marginTop="8dp"/>
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etStockMinimo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="Stock mínimo"
             android:textColor="@color/black"
             android:fontFamily="sans-serif-medium"
             android:textColorHint="@color/morado_mas_suave"
@@ -47,7 +45,7 @@
             android:layout_marginTop="8dp"/>
 
         <Spinner
-            android:id="@+id/spRol"
+            android:id="@+id/spCategoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -59,21 +57,6 @@
             android:layout_marginEnd="0dp"
             android:backgroundTint="@color/morado_mas_suave"
             android:popupBackground="@color/white"/>
-
-        <Spinner
-            android:id="@+id/spSucursal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:spinnerMode="dropdown"
-            android:padding="12dp"
-            android:paddingStart="6dp"
-            android:paddingEnd="0dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="0dp"
-            android:backgroundTint="@color/morado_mas_suave"
-            android:popupBackground="@color/white"/>
-
 
     </LinearLayout>
 

@@ -11,11 +11,4 @@
         <item name="android:background">@color/white</item>
         <item name="android:textColorPrimary">@color/black</item>
     </style>
-
-    <!-- Estilo para las Opciones -->
-    <style name="Opciones" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="colorAccent">@color/morado_mas_suave</item>
-        <item name="android:background">@color/white</item>
-        <item name="android:textColorPrimary">@color/black</item>
-    </style>
 </resources>

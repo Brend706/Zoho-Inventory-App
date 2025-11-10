@@ -35,6 +35,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_margin="16dp"
         android:text="Gestión de Categorías"
         android:textSize="24sp"
@@ -44,7 +45,21 @@
         app:layout_constraintTop_toBottomOf="@id/topAppBar"
         app:layout_constraintHorizontal_bias="0.5"/>
 
+    <!-- Botón Volver-->
+
     <!-- Botón Crear-->
+    <ImageButton
+        android:id="@+id/btnVolverProductos"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Volver a productos"
+        android:src="@drawable/ic_arrorw"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"/>
+
     <Button
         android:id="@+id/btnCrearCategoria"
         android:layout_width="wrap_content"

@@ -19,6 +19,7 @@ import com.zoho.inventarioapp.AdminActivity
 import com.zoho.inventarioapp.R
 import com.zoho.inventarioapp.data.local.entities.Categoria
 import kotlinx.coroutines.launch
+import android.widget.ImageButton
 
 class CategoriasActivity : AppCompatActivity() {
 
@@ -53,6 +54,12 @@ class CategoriasActivity : AppCompatActivity() {
         setupRecyclerView()
         observarDatos()
         setupListeners()
+
+        val btnVolver = findViewById<ImageButton>(R.id.btnVolverProductos)
+        btnVolver.setOnClickListener {
+            finish()
+        }
+
     }
 
     private fun setupRecyclerView() {

@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        // Leer si el usuario es admin desde SharedPreferences
+        // Leer si el usuario es admin
         val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
         val esAdmin = prefs.getBoolean("esAdmin", false)
 
