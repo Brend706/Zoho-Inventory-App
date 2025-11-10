@@ -228,9 +228,9 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Tarjeta de Categorias -->
+        <!-- Tarjeta de Sucursales -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardCategoria"
+            android:id="@+id/cardSucursales"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_rowWeight="1"
@@ -253,14 +253,14 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     app:tint="@android:color/white"
-                    android:contentDescription="Categorias"
-                    android:src="@drawable/ic_category" />
+                    android:contentDescription="Sucursales"
+                    android:src="@drawable/ic_sucursales" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Categorias"
+                    android:text="Sucursales"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />

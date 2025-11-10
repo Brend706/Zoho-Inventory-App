@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             when (vista) {
                 "usuarios" -> bottomNav.selectedItemId = R.id.navigation_usuarios
                 "productos" -> bottomNav.selectedItemId = R.id.navigation_productos
+                "sucursales" -> bottomNav.selectedItemId = R.id.navigation_sucursales
             }
         }
 

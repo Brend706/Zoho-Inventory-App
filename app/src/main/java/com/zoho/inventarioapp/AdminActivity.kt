@@ -8,7 +8,6 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.zoho.inventarioapp.ui.categorias.CategoriasActivity
 
-
 class AdminActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +26,7 @@ class AdminActivity : AppCompatActivity() {
         val cardProductos = findViewById<CardView>(R.id.cardProductos)
         val cardInventario = findViewById<CardView>(R.id.cardInventario)
         val cardMovimientos = findViewById<CardView>(R.id.cardMovimientoInventario)
-        val cardCategoria = findViewById<CardView>(R.id.cardCategoria)
+        val cardSucursales = findViewById<CardView>(R.id.cardSucursales)
 
         // Abrir las vistas usando Intents a MainActivity
         cardUsuarios.setOnClickListener {
@@ -46,9 +45,8 @@ class AdminActivity : AppCompatActivity() {
             abrirEnMainActivity("movimientos")
         }
 
-        cardCategoria.setOnClickListener {
-            val intent = Intent(this, CategoriasActivity::class.java)
-            startActivity(intent)
+        cardSucursales.setOnClickListener {
+            abrirEnMainActivity("sucursales")
         }
     }
 

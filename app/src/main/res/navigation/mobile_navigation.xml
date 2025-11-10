@@ -27,6 +27,6 @@
         android:id="@+id/navigation_sucursales"
         android:name="com.zoho.inventarioapp.ui.sucursales.SucursalesFragment"
         android:label="Sucursales"
-        tools:layout="@layout/fragment_perfil" />
+        tools:layout="@layout/fragment_sucursales" />
 
 </navigation>

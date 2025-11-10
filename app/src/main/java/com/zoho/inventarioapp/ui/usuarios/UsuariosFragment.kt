@@ -81,55 +81,151 @@ class UsuariosFragment : Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_usuario, null)
         val etNombre = dialogView.findViewById<EditText>(R.id.etNombre)
         val etCorreo = dialogView.findViewById<EditText>(R.id.etCorreo)
-        val etRol = dialogView.findViewById<EditText>(R.id.etRol)
-        val etSucursal = dialogView.findViewById<EditText>(R.id.etSucursal)
         val etPassword = dialogView.findViewById<EditText>(R.id.etPassword)
+        val spRol = dialogView.findViewById<Spinner>(R.id.spRol)
+        val spSucursal = dialogView.findViewById<Spinner>(R.id.spSucursal)
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("Crear Usuario")
+        // El campo de contraseña se muestra en creación
+        etPassword.visibility = View.VISIBLE
+
+        // Cargar datos desde la BD
+        viewModel.obtenerRoles()
+        viewModel.obtenerSucursales()
+
+        lifecycleScope.launch {
+            viewModel.roles.collect { roles ->
+                val listaRoles = mutableListOf("Selecciona un rol")
+                listaRoles.addAll(roles.map { it.tipoRol })
+                val adapterRoles = ArrayAdapter(
+                    requireContext(),
+                    R.layout.item_spinner,
+                    listaRoles
+                )
+                adapterRoles.setDropDownViewResource(R.layout.item_spinner)
+                spRol.adapter = adapterRoles
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.sucursales.collect { sucursales ->
+                val listaSucursales = mutableListOf("Selecciona una sucursal (opcional)")
+                listaSucursales.addAll(sucursales.map { it.nombre })
+                val adapterSucursales = ArrayAdapter(
+                    requireContext(),
+                    R.layout.item_spinner,
+                    listaSucursales
+                )
+                adapterSucursales.setDropDownViewResource(R.layout.item_spinner)
+                spSucursal.adapter = adapterSucursales
+            }
+        }
+
+        val builder = AlertDialog.Builder(requireContext(), R.style.EstiloDialog)
+        builder.setTitle("Crear Usuario")
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
                 val nombre = etNombre.text.toString().trim()
                 val correo = etCorreo.text.toString().trim()
-                val rolText = etRol.text.toString().trim()
                 val password = etPassword.text.toString().trim()
-                val sucursalText = etSucursal.text.toString().trim()
+                val rolSeleccionado = spRol.selectedItemPosition
+                val sucursalSeleccionada = spSucursal.selectedItemPosition
 
-                // Validaciónes
-                if (nombre.isEmpty() || correo.isEmpty() || rolText.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Todos los campos son obligatorios.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                if (nombre.isEmpty() || correo.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(requireContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
+
+                if (rolSeleccionado == 0) {
+                    Toast.makeText(requireContext(), "Selecciona un rol válido", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                val idRol = viewModel.roles.value.getOrNull(rolSeleccionado - 1)?.idRol ?: 1
+                val idSucursal = if (sucursalSeleccionada > 0)
+                    viewModel.sucursales.value.getOrNull(sucursalSeleccionada - 1)?.idSucursal
+                else null
 
                 val nuevoUsuario = Usuario(
                     codUsuario = UUID.randomUUID().toString(),
                     nombre = nombre,
                     correo = correo,
                     password = password,
-                    idRol = rolText.toIntOrNull() ?: 1,
-                    idSucursal = sucursalText.toIntOrNull()
+                    idRol = idRol,
+                    idSucursal = idSucursal
                 )
+
                 viewModel.agregarUsuario(nuevoUsuario)
             }
             .setNegativeButton("Cancelar", null)
-            .show()
+
+        val dialog = builder.create()
+        dialog.show()
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            setTextColor(resources.getColor(R.color.morado_suave))
+        }
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).apply {
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            setTextColor(resources.getColor(R.color.morado_suave))
+        }
     }
 
     private fun mostrarDialogoEditarUsuario(usuario: Usuario) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_usuario, null)
         val etNombre = dialogView.findViewById<EditText>(R.id.etNombre)
         val etCorreo = dialogView.findViewById<EditText>(R.id.etCorreo)
-        val etRol = dialogView.findViewById<EditText>(R.id.etRol)
-        val etSucursal = dialogView.findViewById<EditText>(R.id.etSucursal)
+        val etPassword = dialogView.findViewById<EditText>(R.id.etPassword)
+        val spRol = dialogView.findViewById<Spinner>(R.id.spRol)
+        val spSucursal = dialogView.findViewById<Spinner>(R.id.spSucursal)
 
+        //Esto es para que no se vea el campo de Contraseña cuando sea edicion
+        etPassword.visibility = View.GONE
+
+        //Se cargan los datos de nombre y correo del usuario cuando sea edicion
         etNombre.setText(usuario.nombre)
         etCorreo.setText(usuario.correo)
-        etRol.setText(usuario.idRol.toString())
-        etSucursal.setText(usuario.idSucursal?.toString() ?: "")
+
+        // Cargar datos desde la BD
+        viewModel.obtenerRoles()
+        viewModel.obtenerSucursales()
+
+        lifecycleScope.launch {
+            viewModel.roles.collect { roles ->
+                val listaRoles = mutableListOf("Selecciona un rol")
+                listaRoles.addAll(roles.map { it.tipoRol })
+                val adapterRoles = ArrayAdapter(
+                    requireContext(),
+                    R.layout.item_spinner,
+                    listaRoles
+                )
+                adapterRoles.setDropDownViewResource(R.layout.item_spinner)
+                spRol.adapter = adapterRoles
+
+                // Seleccionar el rol actual
+                val indiceRol = roles.indexOfFirst { it.idRol == usuario.idRol }
+                if (indiceRol != -1) spRol.setSelection(indiceRol + 1)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.sucursales.collect { sucursales ->
+                val listaSucursales = mutableListOf("Selecciona una sucursal (opcional)")
+                listaSucursales.addAll(sucursales.map { it.nombre })
+                val adapterSucursales = ArrayAdapter(
+                    requireContext(),
+                    R.layout.item_spinner,
+                    listaSucursales
+                )
+                adapterSucursales.setDropDownViewResource(R.layout.item_spinner)
+                spSucursal.adapter = adapterSucursales
+
+                // Seleccionar la sucursal actual (si tiene)
+                val indiceSucursal = sucursales.indexOfFirst { it.idSucursal == usuario.idSucursal }
+                if (indiceSucursal != -1) spSucursal.setSelection(indiceSucursal + 1)
+            }
+        }
 
         val builder = AlertDialog.Builder(requireContext(), R.style.EstiloDialog)
         builder.setTitle("Editar Usuario")
@@ -137,26 +233,32 @@ class UsuariosFragment : Fragment() {
             .setPositiveButton("Guardar") { _, _ ->
                 val nombre = etNombre.text.toString().trim()
                 val correo = etCorreo.text.toString().trim()
-                val rolText = etRol.text.toString().trim()
-                val sucursalText = etSucursal.text.toString().trim()
+                val rolSeleccionado = spRol.selectedItemPosition
+                val sucursalSeleccionada = spSucursal.selectedItemPosition
 
-                // Validaciónes
-                if (nombre.isEmpty() || correo.isEmpty() || rolText.isEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Todos los campos obligatorios.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                if (nombre.isEmpty() || correo.isEmpty()) {
+                    Toast.makeText(requireContext(), "Nombre y correo son obligatorios", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
 
-                val actualizado = usuario.copy(
+                if (rolSeleccionado == 0) {
+                    Toast.makeText(requireContext(), "Selecciona un rol válido", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                val idRol = viewModel.roles.value.getOrNull(rolSeleccionado - 1)?.idRol ?: usuario.idRol
+                val idSucursal = if (sucursalSeleccionada > 0)
+                    viewModel.sucursales.value.getOrNull(sucursalSeleccionada - 1)?.idSucursal
+                else null
+
+                val usuarioActualizado = usuario.copy(
                     nombre = nombre,
                     correo = correo,
-                    idRol = rolText.toIntOrNull() ?: usuario.idRol,
-                    idSucursal = sucursalText.toIntOrNull()
+                    idRol = idRol,
+                    idSucursal = idSucursal
                 )
-                viewModel.editarUsuario(actualizado)
+
+                viewModel.editarUsuario(usuarioActualizado)
             }
             .setNegativeButton("Cancelar", null)
 

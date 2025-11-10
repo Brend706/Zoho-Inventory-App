@@ -24,7 +24,6 @@ class CategoriasActivity : AppCompatActivity() {
 
     private val viewModel: CategoriasViewModel by viewModels()
     private lateinit var adapter: CategoriaAdapter
-
     private lateinit var toolbar: MaterialToolbar
     private lateinit var rvCategorias: RecyclerView
     private lateinit var tvEmpty: TextView
@@ -55,8 +54,6 @@ class CategoriasActivity : AppCompatActivity() {
         observarDatos()
         setupListeners()
     }
-
-
 
     private fun setupRecyclerView() {
         adapter = CategoriaAdapter(
