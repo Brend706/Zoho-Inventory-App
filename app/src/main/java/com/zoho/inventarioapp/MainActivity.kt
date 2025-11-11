@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         // Configuración barra de estado
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = getColor(R.color.morado_suave)
+//window.statusBarColor = getColor(R.color.morado_suave)
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = false
         }

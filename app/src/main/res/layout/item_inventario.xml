@@ -1,0 +1,94 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tvNombreProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre del Producto"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tvNombreSucursal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sucursal: N/A"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tvStockActual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stock: 0"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textColor="@color/morado_suave" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tvUltimaActualizacion"
+                android:layout_width="201dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="4dp"
+                android:text="Actualizado: 00/00/0000"
+                android:textColor="@color/morado_oscuro2"
+                android:textSize="12sp" />
+
+            <ImageButton
+                android:id="@+id/btnVer"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_view"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Ver movimientos"
+                android:layout_marginEnd="8dp"
+                app:tint="@color/black"/>
+
+            <ImageButton
+                android:id="@+id/btnEditar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_edit"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Editar"
+                android:layout_marginEnd="8dp"
+                app:tint="@color/morado_oscuro"/>
+
+            <ImageButton
+                android:id="@+id/btnEliminar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Eliminar"
+                app:tint="@color/morado_oscuro2"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

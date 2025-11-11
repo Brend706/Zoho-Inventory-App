@@ -45,17 +45,23 @@ class LoginActivity : AppCompatActivity() {
                 if (user != null) {
                     // Guardar rol en SharedPreferences
                     val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
-                    prefs.edit().putBoolean("esAdmin", user.idRol == 1).apply()
+                    val editor = prefs.edit()
+
+                    editor.putBoolean("esAdmin", user.idRol == 1)
 
                     when (user.idRol) {
                         1 -> { // Admin
                             Toast.makeText(this@LoginActivity, "Bienvenido Admin", Toast.LENGTH_SHORT).show()
+                            editor.apply()
                             val intent = Intent(this@LoginActivity, AdminActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
                         2 -> { // Empleado
                             Toast.makeText(this@LoginActivity, "Bienvenido Empleado", Toast.LENGTH_SHORT).show()
+                            // Guardar idSucursal del empleado
+                            editor.putInt("idSucursalUsuario", user.idSucursal ?: -1)
+                            editor.apply() // Guardar cambios
                             val intent = Intent(this@LoginActivity, EmpleadosActivity::class.java)
                             startActivity(intent)
                             finish()

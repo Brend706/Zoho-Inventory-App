@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Producto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/morado_oscuro"/>
+
+        <Spinner
+            android:id="@+id/spProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sucursal"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/morado_oscuro"/>
+
+        <Spinner
+            android:id="@+id/spSucursal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stock Actual"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/morado_oscuro"/>
+
+        <EditText
+            android:id="@+id/etStockActual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el stock actual"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:textColorHint="@color/morado_mas_suave"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
