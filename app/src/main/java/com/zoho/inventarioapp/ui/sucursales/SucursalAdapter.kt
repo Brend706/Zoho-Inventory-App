@@ -16,6 +16,12 @@ class SucursalAdapter(
     private val onDeleteClick: (Sucursal) -> Unit
 ) : ListAdapter<Sucursal, SucursalAdapter.SucursalViewHolder>(SucursalDiffCallback()) {
 
+    private var esAdmin: Boolean = false
+    fun setEsAdmin(admin: Boolean) {
+        esAdmin = admin
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SucursalViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_sucursal, parent, false)
@@ -37,11 +43,21 @@ class SucursalAdapter(
             tvNombre.text = sucursal.nombre
             tvDireccion.text = sucursal.direccion
             tvTelefono.text = sucursal.telefono
-            btnEditar.setOnClickListener {
-                onEditClick(sucursal)
-            }
-            btnEliminar.setOnClickListener {
-                onDeleteClick(sucursal)
+
+            // Configurar visibilidad según el rol
+            if (esAdmin) {
+                btnEditar.visibility = View.VISIBLE
+                btnEliminar.visibility = View.VISIBLE
+
+                btnEditar.setOnClickListener {
+                    onEditClick(sucursal)
+                }
+                btnEliminar.setOnClickListener {
+                    onDeleteClick(sucursal)
+                }
+            } else {
+                btnEditar.visibility = View.GONE
+                btnEliminar.visibility = View.GONE
             }
         }
     }

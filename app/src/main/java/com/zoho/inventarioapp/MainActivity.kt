@@ -2,6 +2,7 @@ package com.zoho.inventarioapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -62,11 +63,48 @@ class MainActivity : AppCompatActivity() {
 
         // Revisar si MainActivity fue abierta desde otra vista
         val vista = intent.getStringExtra("vista")
+        Log.d("MainActivity", "Vista recibida: $vista")
         if (vista != null) {
-            when (vista) {
-                "usuarios" -> if (esAdmin) bottomNav.selectedItemId = R.id.navigation_usuarios
-                "productos" -> bottomNav.selectedItemId = R.id.navigation_productos
-                "sucursales" -> bottomNav.selectedItemId = R.id.navigation_sucursales
+            // Usar post para asegurar que la navegación esté lista
+            bottomNav.post {
+                when (vista) {
+                    "usuarios" -> {
+                        Log.d("MainActivity", "Navegando a Usuarios")
+                        if (esAdmin) {
+                            navController.navigate(R.id.navigation_usuarios)
+                            bottomNav.selectedItemId = R.id.navigation_usuarios
+                        }
+                    }
+                    "categorias" -> {
+                        Log.d("MainActivity", "Navegando a Productos y Categorias")
+                        navController.navigate(R.id.navigation_productos)
+                        bottomNav.selectedItemId = R.id.navigation_productos
+                    }
+                    "productos" -> {
+                        Log.d("MainActivity", "Navegando a Productos")
+                        navController.navigate(R.id.navigation_productos)
+                        bottomNav.selectedItemId = R.id.navigation_productos
+                    }
+                    "inventario" -> {
+                        Log.d("MainActivity", "Navegando a Inventario")
+                        navController.navigate(R.id.navigation_inventario)
+                        bottomNav.selectedItemId = R.id.navigation_inventario
+                    }
+                    "movimientos" -> {
+                        Log.d("MainActivity", "Redirigiendo a Inventario")
+                        Toast.makeText(this, "Selecciona un inventario primero", Toast.LENGTH_SHORT).show()
+                        navController.navigate(R.id.navigation_inventario)
+                        bottomNav.selectedItemId = R.id.navigation_inventario
+                    }
+                    "sucursales" -> {
+                        Log.d("MainActivity", "Navegando a Sucursales")
+                        navController.navigate(R.id.navigation_sucursales)
+                        bottomNav.selectedItemId = R.id.navigation_sucursales
+                    }
+                    else -> {
+                        Log.e("MainActivity", "Vista desconocida: $vista")
+                    }
+                }
             }
         }
 

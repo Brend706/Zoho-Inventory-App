@@ -1,55 +1,56 @@
 package com.zoho.inventarioapp.data.repository
 
+import com.zoho.inventarioapp.data.local.dao.MovimientoConDetalles
 import com.zoho.inventarioapp.data.local.dao.MovimientosInventarioDao
 import com.zoho.inventarioapp.data.local.entities.MovimientosInventario
 import com.zoho.inventarioapp.data.local.entities.TipoMovimiento
 import kotlinx.coroutines.flow.Flow
 
-class MovimientosInventarioRepository(private val movimientoInventarioDao: MovimientosInventarioDao) {
+class MovimientosInventarioRepository(
+    private val movimientoDao: MovimientosInventarioDao
+) {
 
-    val todosLosMovimientos: Flow<List<MovimientosInventario>> = movimientoInventarioDao.obtenerTodos()
+    // Obtener todos los movimientos (si se usa en alguna vista del admin)
+    val todosLosMovimientos: Flow<List<MovimientosInventario>> =
+        movimientoDao.obtenerTodos()
 
+    // Insertar
     suspend fun insertar(movimiento: MovimientosInventario): Long {
-        return movimientoInventarioDao.insertar(movimiento)
+        return movimientoDao.insertar(movimiento)
     }
 
-    suspend fun insertarTodos(movimientos: List<MovimientosInventario>) {
-        movimientoInventarioDao.insertarTodos(movimientos)
-    }
-
+    // Actualizar
     suspend fun actualizar(movimiento: MovimientosInventario) {
-        movimientoInventarioDao.actualizar(movimiento)
+        movimientoDao.actualizar(movimiento)
     }
 
+    // Eliminar
     suspend fun eliminar(movimiento: MovimientosInventario) {
-        movimientoInventarioDao.eliminar(movimiento)
+        movimientoDao.eliminar(movimiento)
     }
 
+    // Obtener por ID
     suspend fun obtenerPorId(id: Int): MovimientosInventario? {
-        return movimientoInventarioDao.obtenerPorId(id)
+        return movimientoDao.obtenerPorId(id)
+    }
+
+    fun obtenerMovimientosPorInventario(inventarioId: Int): Flow<List<MovimientoConDetalles>> {
+        return movimientoDao.obtenerMovimientosPorInventario(inventarioId)
     }
 
     fun obtenerPorTipo(tipo: TipoMovimiento): Flow<List<MovimientosInventario>> {
-        return movimientoInventarioDao.obtenerPorTipo(tipo)
+        return movimientoDao.obtenerPorTipo(tipo)
     }
 
     fun obtenerPorProducto(productoId: Int): Flow<List<MovimientosInventario>> {
-        return movimientoInventarioDao.obtenerPorProducto(productoId)
+        return movimientoDao.obtenerPorProducto(productoId)
     }
 
     fun obtenerPorSucursal(sucursalId: Int): Flow<List<MovimientosInventario>> {
-        return movimientoInventarioDao.obtenerPorSucursal(sucursalId)
+        return movimientoDao.obtenerPorSucursal(sucursalId)
     }
 
     fun obtenerPorUsuario(usuarioId: Int): Flow<List<MovimientosInventario>> {
-        return movimientoInventarioDao.obtenerPorUsuario(usuarioId)
-    }
-
-    fun obtenerPorRangoFechas(fechaInicio: Long, fechaFin: Long): Flow<List<MovimientosInventario>> {
-        return movimientoInventarioDao.obtenerPorRangoFechas(fechaInicio, fechaFin)
-    }
-
-    fun obtenerUltimos(limite: Int): Flow<List<MovimientosInventario>> {
-        return movimientoInventarioDao.obtenerUltimos(limite)
+        return movimientoDao.obtenerPorUsuario(usuarioId)
     }
 }

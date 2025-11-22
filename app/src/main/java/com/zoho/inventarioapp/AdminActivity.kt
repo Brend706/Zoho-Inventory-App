@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.navigation.findNavController
 
 class AdminActivity : AppCompatActivity() {
 
@@ -47,6 +48,28 @@ class AdminActivity : AppCompatActivity() {
 
         cardSucursales.setOnClickListener {
             abrirEnMainActivity("sucursales")
+        }
+
+        manejarNavegacionDelAdmin()
+    }
+
+    private fun manejarNavegacionDelAdmin() {
+        val vista = intent.getStringExtra("vista")
+
+        vista?.let {
+            val navController = findNavController(R.id.mobile_navigation)
+
+            when (it) {
+                "usuarios" -> navController.navigate(R.id.navigation_usuarios)
+                "categorias" -> navController.navigate(R.id.navigation_productos)
+                "productos" -> navController.navigate(R.id.navigation_productos)
+                "inventario" -> navController.navigate(R.id.navigation_inventario)
+                "movimientos" -> {
+                    Toast.makeText(this, "Selecciona un inventario primero", Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.navigation_inventario)
+                }
+                "sucursales" -> navController.navigate(R.id.navigation_sucursales)
+            }
         }
     }
 

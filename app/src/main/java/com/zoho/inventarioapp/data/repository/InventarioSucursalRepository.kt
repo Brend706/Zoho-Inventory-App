@@ -32,6 +32,14 @@ class InventarioSucursalRepository(private val inventarioSucursalDao: Inventario
         return inventarioSucursalDao.obtenerPorProductoYSucursal(productoId, sucursalId)
     }
 
+    suspend fun actualizarStock(idInventario: Int, nuevoStock: Int) {
+        inventarioSucursalDao.actualizarStock(idInventario, nuevoStock)
+    }
+
+    suspend fun obtenerNombreProductoPorInventario(idInventario: Int): String? {
+        return inventarioSucursalDao.obtenerNombreProductoPorInventario(idInventario)
+    }
+
     fun obtenerPorSucursal(sucursalId: Int): Flow<List<InventarioSucursal>> {
         return inventarioSucursalDao.obtenerPorSucursal(sucursalId)
     }

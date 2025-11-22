@@ -26,7 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/morado_mas_suave"
+            android:popupBackground="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,7 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/morado_mas_suave"
+            android:popupBackground="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,7 +64,8 @@
             android:hint="Ingrese el stock actual"
             android:inputType="number"
             android:minHeight="48dp"
-            android:textColorHint="@color/morado_mas_suave"/>
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 

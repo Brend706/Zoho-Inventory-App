@@ -43,10 +43,11 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.usuario.collect { user ->
                 if (user != null) {
-                    // Guardar rol en SharedPreferences
+                    // Guardar datos en SharedPreferences
                     val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
                     val editor = prefs.edit()
 
+                    editor.putInt("idUsuario", user.idUsuario)
                     editor.putBoolean("esAdmin", user.idRol == 1)
 
                     when (user.idRol) {

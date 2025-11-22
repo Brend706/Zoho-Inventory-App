@@ -29,4 +29,11 @@
         android:label="Sucursales"
         tools:layout="@layout/fragment_sucursales" />
 
+    <fragment
+        android:id="@+id/navigationMovimientos"
+        android:name="com.zoho.inventarioapp.ui.movimientos.MovimientosFragment"
+        android:label="Movimientos"
+        tools:layout="@layout/fragment_movimientos" />
+
+
 </navigation>

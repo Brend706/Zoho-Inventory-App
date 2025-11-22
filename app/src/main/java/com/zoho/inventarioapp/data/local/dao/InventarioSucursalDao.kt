@@ -19,6 +19,9 @@ interface InventarioSucursalDao {
     @Delete
     suspend fun eliminar(inventario: InventarioSucursal)
 
+    @Query("UPDATE inventario_sucursal SET stock_actual = :nuevoStock, ultima_actualizacion = :fecha WHERE idInventario = :idInventario")
+    suspend fun actualizarStock(idInventario: Int, nuevoStock: Int, fecha: Long = System.currentTimeMillis())
+
     @Query("SELECT * FROM inventario_sucursal")
     fun obtenerTodos(): Flow<List<InventarioSucursal>>
 
@@ -45,4 +48,13 @@ interface InventarioSucursalDao {
     // Obtener productos sin stock
     @Query("SELECT * FROM inventario_sucursal WHERE stock_actual = 0")
     fun obtenerSinStock(): Flow<List<InventarioSucursal>>
+
+    //obtener el nombre de un producto por su inventario para utilizarlo de titulo
+    @Query("""
+        SELECT p.nombre 
+        FROM inventario_sucursal i
+        INNER JOIN productos p ON i.idProducto = p.idProducto
+        WHERE i.idInventario = :idInventario
+    """)
+    suspend fun obtenerNombreProductoPorInventario(idInventario: Int): String?
 }

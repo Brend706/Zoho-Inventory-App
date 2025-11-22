@@ -1,5 +1,6 @@
 package com.zoho.inventarioapp.ui.sucursales
 
+import android.content.Context
 import android.os.Bundle
 import android.text.method.DigitsKeyListener
 import android.view.LayoutInflater
@@ -45,8 +46,22 @@ class SucursalesFragment : Fragment() {
         fabAgregar = view.findViewById(R.id.fabAgregar)
 
         setupRecyclerView()
+        configurarPermisosPorRol()
         observarDatos()
         setupListeners()
+    }
+
+    private fun configurarPermisosPorRol() {
+        val sharedPrefs = requireContext().getSharedPreferences("userPrefs", Context.MODE_PRIVATE)
+        val esAdmin = sharedPrefs.getBoolean("esAdmin", false)
+
+        if (esAdmin) {
+            fabAgregar.visibility = View.VISIBLE
+            adapter.setEsAdmin(true)
+        } else {
+            fabAgregar.visibility = View.GONE
+            adapter.setEsAdmin(false)
+        }
     }
 
     private fun setupRecyclerView() {

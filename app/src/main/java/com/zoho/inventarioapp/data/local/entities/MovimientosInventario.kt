@@ -32,6 +32,12 @@ import androidx.room.PrimaryKey
             parentColumns = ["idUsuario"],
             childColumns = ["idUsuario"],
             onDelete = ForeignKey.RESTRICT
+        ),
+        ForeignKey(
+            entity = InventarioSucursal::class,
+            parentColumns = ["idInventario"],
+            childColumns = ["idInventario"],
+            onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [
@@ -40,12 +46,14 @@ import androidx.room.PrimaryKey
         Index("idFechasP"),
         Index("idUsuario"),
         Index("fecha_movimiento"),
-        Index("tipo_movimiento")
+        Index("tipo_movimiento"),
+        Index("idInventario")
     ]
 )
 data class MovimientosInventario(
     @PrimaryKey(autoGenerate = true)
     val idMovimiento: Int = 0,
+    val idInventario: Int,
     @ColumnInfo(name = "tipo_movimiento")
     val tipoMovimiento: TipoMovimiento,
     @ColumnInfo(name = "idProducto")
@@ -53,7 +61,7 @@ data class MovimientosInventario(
     @ColumnInfo(name = "idSucursal")
     val idSucursal: Int,  // En qué sucursal
     @ColumnInfo(name = "idFechasP")
-    val idFechasP: Int?,  // Con qué fechas (solo para INGRESO)
+    val idFechasP: Int?,  // Con qué fechas de entrada y expiracion (solo para INGRESO)
     val cantidad: Int,
     @ColumnInfo(name = "idUsuario")
     val idUsuario: Int,

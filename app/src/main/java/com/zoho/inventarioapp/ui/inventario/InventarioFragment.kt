@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.Date
+import androidx.navigation.fragment.findNavController
 
 class InventarioFragment : Fragment() {
 
@@ -140,7 +141,7 @@ class InventarioFragment : Fragment() {
         val tvSucursal = card.findViewById<TextView>(R.id.tvNombreSucursal)
         val tvStock = card.findViewById<TextView>(R.id.tvStockActual)
         val tvFecha = card.findViewById<TextView>(R.id.tvUltimaActualizacion)
-        val btnVer = card.findViewById<ImageButton>(R.id.btnVer)
+        val btnVer = card.findViewById<Button>(R.id.btnVer)
         val btnEditar = card.findViewById<ImageButton>(R.id.btnEditar)
         val btnEliminar = card.findViewById<ImageButton>(R.id.btnEliminar)
 
@@ -160,9 +161,13 @@ class InventarioFragment : Fragment() {
         val fechaFormateada = sdf.format(Date(inventario.ultimaActualizacion))
         tvFecha.text = "Actualizado: $fechaFormateada"
 
-        // Botones
+        // Boton VER MOVIMIENTOS, ABRE LA VISTA DE MOVIMIENTOS
         btnVer.setOnClickListener {
-            Toast.makeText(requireContext(), "Próximamente: Ver movimientos", Toast.LENGTH_SHORT).show()
+            val bundle = Bundle().apply {
+                putInt("inventarioId", inventario.idInventario)
+            }
+
+            findNavController().navigate(R.id.navigationMovimientos, bundle)
         }
         btnEditar.setOnClickListener {
             mostrarDialogoEditarInventario(inventario)

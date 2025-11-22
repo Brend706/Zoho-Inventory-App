@@ -12,10 +12,6 @@ class FechasProductoRepository(private val fechasProductoDao: FechasProductoDao)
         return fechasProductoDao.insertar(fechasProducto)
     }
 
-    suspend fun insertarTodas(fechasProductos: List<FechasProducto>) {
-        fechasProductoDao.insertarTodas(fechasProductos)
-    }
-
     suspend fun actualizar(fechasProducto: FechasProducto) {
         fechasProductoDao.actualizar(fechasProducto)
     }
