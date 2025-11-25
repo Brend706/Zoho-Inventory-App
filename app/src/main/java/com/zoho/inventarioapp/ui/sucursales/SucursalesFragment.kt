@@ -170,7 +170,7 @@ class SucursalesFragment : Fragment() {
                 val telefono = etTelefono.text.toString()
 
                 if (nombre.isNotEmpty() && direccion.isNotEmpty() && telefono.isNotEmpty() && telefono.matches(Regex("\\d{4}-\\d{4}"))) {
-                    viewModel.agregarSucursal(nombre, direccion, telefono)
+                    viewModel.actualizarSucursal(sucursal.idSucursal,nombre, direccion, telefono)
                 }  else if(!telefono.matches(Regex("\\d{4}-\\d{4}"))){
                     Toast.makeText(requireContext(), "Ingresa el Telefono con el formato 0000-0000", Toast.LENGTH_SHORT).show()
                 } else {

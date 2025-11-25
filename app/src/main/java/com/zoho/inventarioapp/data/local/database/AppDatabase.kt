@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
         InventarioSucursal::class,
         MovimientosInventario::class
     ],
-    version = 4, //cambion de version de bd
+    version = 4, //cambio de version de bd
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -143,7 +143,7 @@ abstract class AppDatabase : RoomDatabase() {
             val idProductoHarina = database.productoDao().insertar(
                 Producto(
                     codProducto = "PROD001",
-                    nombre = "Harina de Trigo Todo Uso",
+                    nombre = "Harina de Trigo",
                     idCategoria = idCategoriaHarinas.toInt(),
                     stockMinimo = 20
                 )
@@ -152,7 +152,7 @@ abstract class AppDatabase : RoomDatabase() {
             val idProductoMantequilla = database.productoDao().insertar(
                 Producto(
                     codProducto = "PROD002",
-                    nombre = "Mantequilla sin Sal",
+                    nombre = "Mantequilla",
                     idCategoria = idCategoriaLacteos.toInt(),
                     stockMinimo = 15
                 )
@@ -161,7 +161,7 @@ abstract class AppDatabase : RoomDatabase() {
             val idProductoAzucar = database.productoDao().insertar(
                 Producto(
                     codProducto = "PROD003",
-                    nombre = "Azúcar Blanca Refinada",
+                    nombre = "Azúcar Blanca",
                     idCategoria = idCategoriaEndulzantes.toInt(),
                     stockMinimo = 25
                 )

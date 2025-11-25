@@ -81,31 +81,46 @@
             app:menu="@menu/bottom_nav_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- PANEL DE NOTIFICACIONES-->
-    <LinearLayout
-        android:id="@+id/notificaciones_panel"
-        android:layout_width="280dp"
+    <!--PANEL DE LA DERECHA -->
+    <FrameLayout
+        android:id="@+id/drawer_right_container"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:orientation="vertical"
-        android:background="@android:color/white"
-        android:padding="16dp"
-        tools:ignore="RtlHardcoded">
+        android:layout_marginTop="30dp"
+        android:background="@android:color/white">
 
-        <TextView
+        <!-- Panel de Notificaciones -->
+        <LinearLayout
+            android:id="@+id/notificaciones_panel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Notificaciones"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingBottom="8dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/texto_notificaciones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No hay notificaciones por ahora..."
-            android:textColor="@color/black"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notificaciones"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/texto_notificaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No hay notificaciones por ahora..."
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- Panel de Perfil -->
+        <include
+            android:id="@+id/drawer_perfil"
+            layout="@layout/drawer_perfil"
+            android:visibility="gone"/>
+    </FrameLayout>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

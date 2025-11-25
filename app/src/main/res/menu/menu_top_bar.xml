@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_editperfil"
-        android:title="Editar Perfil"
+        android:title="Ver Perfil"
         android:showAsAction="never" />
 
     <item

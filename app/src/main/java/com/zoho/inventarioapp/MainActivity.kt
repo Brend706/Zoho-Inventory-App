@@ -3,6 +3,8 @@ package com.zoho.inventarioapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -10,19 +12,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
 import androidx.core.view.GravityCompat
-import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.zoho.inventarioapp.data.local.database.AppDatabase
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Configuración barra de estado
         WindowCompat.setDecorFitsSystemWindows(window, false)
-//window.statusBarColor = getColor(R.color.morado_suave)
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = false
         }
@@ -44,6 +48,29 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Referencias paneles del drawer
+        drawerLayout = findViewById(R.id.drawer_layout)
+        val btnNotificaciones = findViewById<ImageButton>(R.id.btn_notificaciones)
+
+        val panelNotificaciones = findViewById<View>(R.id.notificaciones_panel)
+        val panelPerfil = findViewById<View>(R.id.drawer_perfil)
+
+        btnNotificaciones.setOnClickListener {
+
+            // Si está abierto, solo ciérralo
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                return@setOnClickListener
+            }
+
+            // Mostrar panel notificaciones
+            panelNotificaciones.visibility = View.VISIBLE
+            panelPerfil.visibility = View.GONE
+
+            drawerLayout.openDrawer(GravityCompat.END)
+        }
+
+        // Toolbar
         val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.topAppBar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -54,70 +81,45 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val bottomNav = findViewById<BottomNavigationView>(R.id.nav_view)
 
-        // Ocultar opción de Usuarios si no es admin
         if (!esAdmin) {
             bottomNav.menu.findItem(R.id.navigation_usuarios)?.isVisible = false
         }
 
         bottomNav.setupWithNavController(navController)
 
-        // Revisar si MainActivity fue abierta desde otra vista
+        // Redirecciones
         val vista = intent.getStringExtra("vista")
         Log.d("MainActivity", "Vista recibida: $vista")
         if (vista != null) {
-            // Usar post para asegurar que la navegación esté lista
             bottomNav.post {
                 when (vista) {
-                    "usuarios" -> {
-                        Log.d("MainActivity", "Navegando a Usuarios")
-                        if (esAdmin) {
-                            navController.navigate(R.id.navigation_usuarios)
-                            bottomNav.selectedItemId = R.id.navigation_usuarios
-                        }
+                    "usuarios" -> if (esAdmin) {
+                        navController.navigate(R.id.navigation_usuarios)
+                        bottomNav.selectedItemId = R.id.navigation_usuarios
                     }
-                    "categorias" -> {
-                        Log.d("MainActivity", "Navegando a Productos y Categorias")
+                    "categorias", "productos" -> {
                         navController.navigate(R.id.navigation_productos)
                         bottomNav.selectedItemId = R.id.navigation_productos
                     }
-                    "productos" -> {
-                        Log.d("MainActivity", "Navegando a Productos")
-                        navController.navigate(R.id.navigation_productos)
-                        bottomNav.selectedItemId = R.id.navigation_productos
-                    }
-                    "inventario" -> {
-                        Log.d("MainActivity", "Navegando a Inventario")
-                        navController.navigate(R.id.navigation_inventario)
-                        bottomNav.selectedItemId = R.id.navigation_inventario
-                    }
-                    "movimientos" -> {
-                        Log.d("MainActivity", "Redirigiendo a Inventario")
-                        Toast.makeText(this, "Selecciona un inventario primero", Toast.LENGTH_SHORT).show()
+                    "inventario", "movimientos" -> {
                         navController.navigate(R.id.navigation_inventario)
                         bottomNav.selectedItemId = R.id.navigation_inventario
                     }
                     "sucursales" -> {
-                        Log.d("MainActivity", "Navegando a Sucursales")
                         navController.navigate(R.id.navigation_sucursales)
                         bottomNav.selectedItemId = R.id.navigation_sucursales
-                    }
-                    else -> {
-                        Log.e("MainActivity", "Vista desconocida: $vista")
                     }
                 }
             }
         }
 
-        // Panel de notificaciones
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val btnNotificaciones = findViewById<ImageButton>(R.id.btn_notificaciones)
-        btnNotificaciones.setOnClickListener {
-            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-                drawerLayout.closeDrawer(GravityCompat.END)
-            } else {
-                drawerLayout.openDrawer(GravityCompat.END)
-            }
+        // Botón cerrar perfil
+        val btnCerrarPerfil = findViewById<Button>(R.id.btnCerrarPerfil)
+        btnCerrarPerfil.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
         }
+
+        cargarDatosPerfil()
     }
 
     override fun onCreateOptionsMenu(menu: android.view.Menu?): Boolean {
@@ -127,22 +129,53 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
+
             R.id.action_editperfil -> {
-                Toast.makeText(this, "Editar Perfil", Toast.LENGTH_SHORT).show()
+                drawerLayout.openDrawer(GravityCompat.END)
+
+                // Mostrar panel perfil
+                findViewById<View>(R.id.drawer_perfil).visibility = View.VISIBLE
+
+                // Ocultar panel notificaciones
+                findViewById<View>(R.id.notificaciones_panel).visibility = View.GONE
                 true
             }
+
             R.id.action_cerrarsesion -> {
                 val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
                 prefs.edit().clear().apply()
 
-                // Redirigir al LoginActivity
                 val intent = Intent(this, com.zoho.inventarioapp.ui.login.LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
-                finish() // cerrar MainActivity
+                finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun cargarDatosPerfil() {
+        val prefs = getSharedPreferences("userPrefs", MODE_PRIVATE)
+        val idUsuario = prefs.getInt("idUsuario", -1)
+
+        if (idUsuario != -1) {
+            lifecycleScope.launch {
+                val db = AppDatabase.getDatabase(this@MainActivity)
+                val usuario = db.usuarioDao().obtenerPorId(idUsuario)
+
+                if (usuario != null) {
+                    val rol = db.rolDao().obtenerPorId(usuario.idRol)
+                    val sucursal = usuario.idSucursal?.let { db.sucursalDao().obtenerPorId(it) }
+
+                    findViewById<TextView>(R.id.tvPerfilNombre).text = usuario.nombre
+                    findViewById<TextView>(R.id.tvPerfilCorreo).text = usuario.correo
+                    findViewById<TextView>(R.id.tvPerfilRol).text = rol?.tipoRol ?: "Sin rol"
+                    findViewById<TextView>(R.id.tvPerfilSucursal).text = sucursal?.nombre ?: "Sin sucursal"
+                    findViewById<TextView>(R.id.tvPerfilCodigo).text = usuario.codUsuario
+                }
+            }
         }
     }
 }
